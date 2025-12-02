@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volunteer Hub - Make a Difference</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-hands-helping"></i>
+        <span>Volunteer Hub</span>
+      </div>
+      <div class="nav-links">
+        <a href="#" onclick="showSection('home')" class="nav-link active" data-section="home">
+          <i class="fas fa-home"></i> Events
+        </a>
+        <a href="#" onclick="checkAuthAndShow('create')" class="nav-link" data-section="create">
+          <i class="fas fa-plus-circle"></i> Create Event
+        </a>
+        <a href="#" onclick="checkAuthAndShow('admin')" class="nav-link" data-section="admin">
+          <i class="fas fa-user-shield"></i> Admin
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Make a Difference Today</h1>
+      <p class="hero-subtitle">Join our community of volunteers and help create positive change</p>
+    </div>
+  </section>
+
+  <div class="main-container">
+    <!-- Login Section -->
+    <section id="login" class="section hidden">
+      <div class="auth-card">
+        <div class="auth-header">
+          <i class="fas fa-lock"></i>
+          <h2>Admin Login</h2>
+          <p>Enter your credentials to access admin features</p>
+        </div>
+        <form id="loginForm" class="auth-form">
+          <div class="form-group">
+            <label><i class="fas fa-key"></i> Password</label>
+            <input type="password" id="password" placeholder="Enter admin password" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Home Section - Event List -->
+    <section id="home" class="section">
+      <div class="section-header">
+        <h2><i class="fas fa-calendar-alt"></i> Upcoming Events</h2>
+        <p>Browse and sign up for volunteer opportunities</p>
+      </div>
+      <div id="eventList" class="event-grid">
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i> Loading events...
+        </div>
+      </div>
+    </section>
+
+    <!-- Create Event Section -->
+    <section id="create" class="section hidden">
+      <div class="section-header">
+        <h2><i class="fas fa-plus-circle"></i> Create New Event</h2>
+        <p>Fill in the details to create a volunteer opportunity</p>
+      </div>
+      <div class="form-card">
+        <form id="createForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label><i class="fas fa-heading"></i> Event Title</label>
+              <input type="text" id="title" placeholder="e.g., Community Food Drive" required>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label><i class="fas fa-calendar"></i> Date</label>
+              <input type="date" id="date" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-clock"></i> Time</label>
+              <input type="text" id="time" placeholder="e.g., 2:00 PM - 5:00 PM" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label><i class="fas fa-align-left"></i> Description</label>
+            <textarea id="description" rows="4" placeholder="Describe the event and what volunteers will do..." required></textarea>
+          </div>
+
+          <div class="roles-section">
+            <div class="roles-header">
+              <h3><i class="fas fa-users"></i> Volunteer Roles</h3>
+              <button type="button" onclick="addRole()" class="btn btn-secondary btn-sm">
+                <i class="fas fa-plus"></i> Add Role
+              </button>
+            </div>
+            <div id="rolesContainer"></div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-check"></i> Create Event
+            </button>
+            <button type="button" onclick="logout()" class="btn btn-outline">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Event Detail View -->
+    <section id="eventView" class="section hidden">
+      <button onclick="showSection('home')" class="btn btn-back">
+        <i class="fas fa-arrow-left"></i> Back to Events
+      </button>
+      <div id="eventDetails"></div>
+    </section>
+
+    <!-- Admin Dashboard -->
+    <section id="admin" class="section hidden">
+      <div class="section-header">
+        <h2><i class="fas fa-user-shield"></i> Admin Dashboard</h2>
+        <button onclick="logout()" class="btn btn-outline btn-sm">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+      <div id="adminList" class="admin-grid"></div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2024 Volunteer Hub. Making the world a better place, one volunteer at a time.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

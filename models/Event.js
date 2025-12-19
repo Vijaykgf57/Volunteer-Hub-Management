@@ -62,6 +62,21 @@ const eventSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  category: {
+    type: String,
+    required: true,
+    enum: ['Environment', 'Education', 'Health', 'Community', 'Animals', 'Food & Hunger', 'Seniors', 'Youth', 'Arts & Culture', 'Other'],
+    default: 'Community'
+  },
+  imageUrl: {
+    type: String,
+    default: '/images/default-event.jpg'
+  },
+  location: {
+    address: String,
+    city: String,
+    state: String
+  },
   roles: [roleSchema],
   createdBy: {
     type: String,
@@ -150,8 +165,23 @@ async function createEvent(eventData) {
 }
 
 // Get All Events (upcoming only)
-async function getAllEvents() {
-  return await Event.find({ date: { $gte: new Date() } })
+async function getAllEvents(filters = {}) {
+  const query = { date: { $gte: new Date() } };
+  
+  // Add category filter
+  if (filters.category && filters.category !== 'All') {
+    query.category = filters.category;
+  }
+  
+  // Add search filter
+  if (filters.search) {
+    query.$or = [
+      { title: { $regex: filters.search, $options: 'i' } },
+      { description: { $regex: filters.search, $options: 'i' } }
+    ];
+  }
+  
+  return await Event.find(query)
     .sort({ date: 1 })
     .lean();
 }

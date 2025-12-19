@@ -91,12 +91,24 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 });
 
 // Load Events (Public View)
-async function loadEvents() {
+async function loadEvents(filters = {}) {
   const eventList = document.getElementById('eventList');
   eventList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading events...</div>';
   
   try {
-    const response = await fetch(`${API}/events`);
+    // Build query string
+    const params = new URLSearchParams();
+    if (filters.category && filters.category !== 'All') {
+      params.append('category', filters.category);
+    }
+    if (filters.search) {
+      params.append('search', filters.search);
+    }
+    
+    const queryString = params.toString();
+    const url = queryString ? `${API}/events?${queryString}` : `${API}/events`;
+    
+    const response = await fetch(url);
     const events = await response.json();
     
     if (!events || events.length === 0) {
@@ -122,6 +134,7 @@ async function loadEvents() {
       return `
         <div class="event-card" onclick="viewEvent('${event._id}')">
           <div class="event-card-header">
+            <span class="event-category">${getCategoryIcon(event.category)} ${event.category}</span>
             <h3 class="event-card-title">${event.title}</h3>
             <div class="event-card-meta">
               <span><i class="fas fa-calendar"></i>${new Date(event.date).toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}</span>
@@ -315,6 +328,7 @@ document.getElementById('createForm').addEventListener('submit', async (e) => {
   
   const payload = {
     title: document.getElementById('title').value.trim(),
+    category: document.getElementById('category').value,
     date: document.getElementById('date').value,
     time: document.getElementById('time').value.trim(),
     description: document.getElementById('description').value.trim(),
@@ -445,6 +459,44 @@ async function adminDelete(eventId) {
   } catch (error) {
     showToast('Error deleting event: ' + error.message, 'error');
   }
+}
+
+// Filter Functions
+function handleSearch() {
+  const searchTerm = document.getElementById('searchInput').value;
+  const category = document.getElementById('categoryFilter').value;
+  
+  loadEvents({ search: searchTerm, category });
+}
+
+function handleCategoryFilter() {
+  const category = document.getElementById('categoryFilter').value;
+  const searchTerm = document.getElementById('searchInput').value;
+  
+  loadEvents({ search: searchTerm, category });
+}
+
+function clearFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('categoryFilter').value = 'All';
+  loadEvents();
+}
+
+// Category Icon Helper
+function getCategoryIcon(category) {
+  const icons = {
+    'Environment': '🌱',
+    'Education': '📚',
+    'Health': '🏥',
+    'Community': '🏘️',
+    'Animals': '🐾',
+    'Food & Hunger': '🍽️',
+    'Seniors': '👴',
+    'Youth': '👶',
+    'Arts & Culture': '🎨',
+    'Other': '📋'
+  };
+  return icons[category] || '📋';
 }
 
 // Initialize App

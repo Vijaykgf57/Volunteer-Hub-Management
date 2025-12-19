@@ -65,7 +65,39 @@
         <h2><i class="fas fa-calendar-alt"></i> Upcoming Events</h2>
         <p>Browse and sign up for volunteer opportunities</p>
       </div>
-      <div id="eventList" class="event-grid">
+      
+      <!-- Filters -->
+      <div class="filters-card">
+        <div class="filters-row">
+          <div class="filter-group">
+            <label><i class="fas fa-search"></i> Search Events</label>
+            <input type="text" id="searchInput" placeholder="Search by title or description..." onkeyup="handleSearch()">
+          </div>
+          <div class="filter-group">
+            <label><i class="fas fa-tags"></i> Category</label>
+            <select id="categoryFilter" onchange="handleCategoryFilter()">
+              <option value="All">All Categories</option>
+              <option value="Environment">🌱 Environment</option>
+              <option value="Education">📚 Education</option>
+              <option value="Health">🏥 Health</option>
+              <option value="Community">🏘️ Community</option>
+              <option value="Animals">🐾 Animals</option>
+              <option value="Food & Hunger">🍽️ Food & Hunger</option>
+              <option value="Seniors">👴 Seniors</option>
+              <option value="Youth">👶 Youth</option>
+              <option value="Arts & Culture">🎨 Arts & Culture</option>
+              <option value="Other">📋 Other</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <button onclick="clearFilters()" class="btn btn-outline btn-sm">
+              <i class="fas fa-times"></i> Clear Filters
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div id="eventList" class="event-grid"></div>
         <div class="loading">
           <i class="fas fa-spinner fa-spin"></i> Loading events...
         </div>
@@ -84,6 +116,22 @@
             <div class="form-group">
               <label><i class="fas fa-heading"></i> Event Title</label>
               <input type="text" id="title" placeholder="e.g., Community Food Drive" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-tags"></i> Category</label>
+              <select id="category" required>
+                <option value="">Select Category</option>
+                <option value="Environment">🌱 Environment</option>
+                <option value="Education">📚 Education</option>
+                <option value="Health">🏥 Health</option>
+                <option value="Community">🏘️ Community</option>
+                <option value="Animals">🐾 Animals</option>
+                <option value="Food & Hunger">🍽️ Food & Hunger</option>
+                <option value="Seniors">👴 Seniors</option>
+                <option value="Youth">👶 Youth</option>
+                <option value="Arts & Culture">🎨 Arts & Culture</option>
+                <option value="Other">📋 Other</option>
+              </select>
             </div>
           </div>
           
@@ -141,6 +189,7 @@
           <i class="fas fa-sign-out-alt"></i> Logout
         </button>
       </div>
+      
       <div id="adminList" class="admin-grid"></div>
     </section>
   </div>

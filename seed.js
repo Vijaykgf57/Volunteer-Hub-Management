@@ -5,6 +5,7 @@ const { connectDB, createEvent, Event } = require('./models/Event');
 const sampleEvents = [
   {
     title: 'Community Food Drive',
+    category: 'Food & Hunger',
     date: new Date('2025-12-15'),
     time: '10:00 AM - 2:00 PM',
     description: 'Help us collect and distribute food to families in need this holiday season. We need volunteers to sort donations, pack boxes, and assist with distribution.',
@@ -16,6 +17,7 @@ const sampleEvents = [
   },
   {
     title: 'Beach Cleanup Day',
+    category: 'Environment',
     date: new Date('2025-12-20'),
     time: '8:00 AM - 12:00 PM',
     description: 'Join us for a morning of environmental action! Help keep our beaches clean and protect marine life. All supplies provided.',
@@ -27,6 +29,7 @@ const sampleEvents = [
   },
   {
     title: 'Senior Center Holiday Party',
+    category: 'Seniors',
     date: new Date('2025-12-22'),
     time: '2:00 PM - 5:00 PM',
     description: 'Spread holiday cheer by helping organize and run a festive party for seniors in our community. Activities include games, music, and refreshments.',
@@ -38,6 +41,7 @@ const sampleEvents = [
   },
   {
     title: 'Youth Mentorship Program',
+    category: 'Education',
     date: new Date('2026-01-10'),
     time: '4:00 PM - 6:00 PM',
     description: 'Make a lasting impact by mentoring local youth. Help with homework, share career advice, and be a positive role model.',
@@ -49,6 +53,7 @@ const sampleEvents = [
   },
   {
     title: 'Animal Shelter Support',
+    category: 'Animals',
     date: new Date('2026-01-15'),
     time: '9:00 AM - 1:00 PM',
     description: 'Help care for animals at our local shelter. Tasks include walking dogs, socializing cats, cleaning facilities, and administrative support.',
